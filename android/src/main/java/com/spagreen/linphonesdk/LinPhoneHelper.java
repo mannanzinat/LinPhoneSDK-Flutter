@@ -1,5 +1,6 @@
 package com.spagreen.linphonesdk;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -32,7 +33,7 @@ public class LinPhoneHelper {
     private EventChannelHelper callEventListener;
 
 
-    public LinPhoneHelper(Context context, EventChannelHelper loginListener, EventChannelHelper callEventListener) {
+    public LinPhoneHelper(Activity context, EventChannelHelper loginListener, EventChannelHelper callEventListener) {
         this.context = context;
         this.loginListener = loginListener;
         this.callEventListener = callEventListener;

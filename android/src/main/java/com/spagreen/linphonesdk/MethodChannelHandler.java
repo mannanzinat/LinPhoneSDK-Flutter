@@ -1,6 +1,7 @@
 package com.spagreen.linphonesdk;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
@@ -14,19 +15,18 @@ import io.flutter.plugin.common.MethodChannel;
 
 public class MethodChannelHandler extends FlutterActivity implements MethodChannel.MethodCallHandler {
     private final String TAG = MethodChannelHandler.class.getSimpleName();
-    private Context context;
     private EventChannelHelper loginEventListener;
     private EventChannelHelper callEventListener;
     private LinPhoneHelper linPhoneHelper;
-    private ActivityPluginBinding activityPluginBinding;
+    private Activity activity;
 
-    public MethodChannelHandler(Context context, ActivityPluginBinding activityPluginBinding,
+    public MethodChannelHandler( Activity activity,
                                 EventChannelHelper loginEventListener, EventChannelHelper callEventListener) {
-        this.context = context;
+
         this.loginEventListener = loginEventListener;
         this.callEventListener = callEventListener;
-        this.linPhoneHelper = new LinPhoneHelper(context, loginEventListener, callEventListener);
-        this.activityPluginBinding = activityPluginBinding;
+        this.linPhoneHelper = new LinPhoneHelper(activity, loginEventListener, callEventListener);
+        this.activity = activity;
     }
 
     @Override
@@ -69,7 +69,7 @@ public class MethodChannelHandler extends FlutterActivity implements MethodChann
                             Manifest.permission.ACCESS_WIFI_STATE,
                             Manifest.permission.CHANGE_WIFI_STATE,
                     };
-                    boolean isSuccess = new Utils().checkPermissions(permissionArrays, activityPluginBinding);
+                    boolean isSuccess = new Utils().checkPermissions(permissionArrays, activity);
                     if (isSuccess) {
                         result.success(true);
                     } else {
