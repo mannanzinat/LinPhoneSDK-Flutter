@@ -39,10 +39,6 @@ public class LinPhoneHelper {
         this.callEventListener = callEventListener;
     }
 
-    public void status(MethodChannel.Result result) {
-        result.success("Android " + android.os.Build.VERSION.RELEASE);
-    }
-
     public void login(String userName, String domain, String password) {
         this.domain = domain;
         this.userName = userName;
@@ -83,7 +79,7 @@ public class LinPhoneHelper {
     }
 
     public void call(String number) {
-        if (core == null )return;
+        if (core == null) return;
         String formattedNumber = String.format("sip:%s@%s", number, domain);
         Address remoteAddress = Factory.instance().createAddress(formattedNumber);
         if (remoteAddress == null) return;
@@ -115,11 +111,14 @@ public class LinPhoneHelper {
 
     public void toggleSpeaker() {
         // Get the currently used audio device
-        AudioDevice currentAudioDevice = core.getCurrentCall().getInputAudioDevice();
+        AudioDevice currentAudioDevice = core.getCurrentCall().getOutputAudioDevice();
         boolean speakerEnabled = currentAudioDevice.getType() == AudioDevice.Type.Speaker;
 
         // We can get a list of all available audio devices using
         // Note that on tablets for example, there may be no Earpiece device
+
+        Log.e(TAG, "--------------toggleSpeaker: " + speakerEnabled);
+        Log.e(TAG, "--------------toggleSpeaker: " + currentAudioDevice.getType());
 
         for (int i = 0; i < core.getAudioDevices().length; i++) {
             AudioDevice audioDevice = core.getAudioDevices()[i];
@@ -140,7 +139,7 @@ public class LinPhoneHelper {
         loginListener.handler = null;
     }
 
-    public void removeCallListener(){
+    public void removeCallListener() {
         if (core == null) return;
         core.removeListener(coreListener);
         core = null;
@@ -175,23 +174,23 @@ public class LinPhoneHelper {
                     callEventListener.success(state.name());
                     break;
                 case StreamsRunning:
-                    Log.e(TAG, "onCallStateChanged: StreamsRunning" );
+                    Log.e(TAG, "onCallStateChanged: StreamsRunning");
                     callEventListener.success(state.name());
                     break;
                 case Paused:
-                    Log.e(TAG, "onCallStateChanged: Paused" );
+                    Log.e(TAG, "onCallStateChanged: Paused");
                     callEventListener.success(state.name());
                     break;
                 case PausedByRemote:
-                    Log.e(TAG, "onCallStateChanged: PausedByRemote" );
+                    Log.e(TAG, "onCallStateChanged: PausedByRemote");
                     callEventListener.success(state.name());
                     break;
                 case Updating:
-                    Log.e(TAG, "onCallStateChanged: Updating" );
+                    Log.e(TAG, "onCallStateChanged: Updating");
                     callEventListener.success(state.name());
                     break;
                 case UpdatedByRemote:
-                    Log.e(TAG, "onCallStateChanged: UpdatedByRemote" );
+                    Log.e(TAG, "onCallStateChanged: UpdatedByRemote");
                     callEventListener.success(state.name());
                     break;
                 case Released:

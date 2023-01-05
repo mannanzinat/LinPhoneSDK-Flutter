@@ -58,6 +58,10 @@ public class MethodChannelHandler extends FlutterActivity implements MethodChann
                 linPhoneHelper.call(number);
                 result.success(true);
                 break;
+            case "toggle_speaker":
+                linPhoneHelper.toggleSpeaker();
+                result.success(true);
+                break;
             case "request_permissions":
                 try {
                     String[] permissionArrays = new String[]{

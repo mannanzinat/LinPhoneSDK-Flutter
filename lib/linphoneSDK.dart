@@ -26,6 +26,10 @@ class LinphoneSDK {
     return await _channel.invokeMethod("login", data);
   }
 
+  Future<void> toggleSpeaker()async{
+    return await _channel.invokeMethod("toggle_speaker");
+  }
+
   Future<void> call({required String number}) async {
     var data = {"number": number};
     return await _channel.invokeMethod("call", data);
