@@ -59,6 +59,10 @@ class _MyAppState extends State<MyApp> {
     await _linphoneSdkPlugin.toggleSpeaker();
   }
 
+  Future<bool> toggleMute()async{
+   return await _linphoneSdkPlugin.toggleMute();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -106,6 +110,12 @@ class _MyAppState extends State<MyApp> {
                   toggleSpeaker();
                 },
                 child: const Text("Speaker")),
+            const SizedBox(height: 20),
+            ElevatedButton(
+                onPressed: () {
+                  toggleMute();
+                },
+                child: const Text("Mute")),
             const SizedBox(height: 20),
             StreamBuilder<CallState>(
               stream: _linphoneSdkPlugin.addCallStateListener(),

@@ -109,6 +109,20 @@ public class LinPhoneHelper {
         callEventListener.success("Released");
     }
 
+    public boolean toggleMute(){
+        if (core == null) return false;
+        if (core.getCurrentCall() != null){
+            if (core.getCurrentCall().getMicrophoneMuted()){
+                core.getCurrentCall().setMicrophoneMuted(false);
+                return false;
+            }else {
+                core.getCurrentCall().setMicrophoneMuted(true);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void toggleSpeaker() {
         // Get the currently used audio device
         AudioDevice currentAudioDevice = core.getCurrentCall().getOutputAudioDevice();

@@ -20,7 +20,7 @@ public class MethodChannelHandler extends FlutterActivity implements MethodChann
     private LinPhoneHelper linPhoneHelper;
     private Activity activity;
 
-    public MethodChannelHandler( Activity activity,
+    public MethodChannelHandler(Activity activity,
                                 EventChannelHelper loginEventListener, EventChannelHelper callEventListener) {
 
         this.loginEventListener = loginEventListener;
@@ -52,6 +52,12 @@ public class MethodChannelHandler extends FlutterActivity implements MethodChann
             case "hangUp":
                 linPhoneHelper.hangUp();
                 result.success(true);
+                break;
+            case "mute":
+                boolean isMuted = linPhoneHelper.toggleMute();
+                result.success(isMuted);
+                break;
+
             case "call":
                 Map callData = (Map) call.arguments;
                 String number = (String) callData.get("number");

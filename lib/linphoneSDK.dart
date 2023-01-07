@@ -26,8 +26,12 @@ class LinphoneSDK {
     return await _channel.invokeMethod("login", data);
   }
 
-  Future<void> toggleSpeaker()async{
+  Future<void> toggleSpeaker() async {
     return await _channel.invokeMethod("toggle_speaker");
+  }
+
+  Future<bool> toggleMute() async {
+    return await _channel.invokeMethod("mute");
   }
 
   Future<void> call({required String number}) async {
@@ -72,25 +76,25 @@ class LinphoneSDK {
         callState = CallState.outgoingInit;
       } else if (event == "OutgoingProgress") {
         callState = CallState.outgoingProgress;
-      }else if (event == "OutgoingRinging") {
+      } else if (event == "OutgoingRinging") {
         callState = CallState.outgoingRinging;
-      }else if (event == "Connected") {
+      } else if (event == "Connected") {
         callState = CallState.connected;
-      }else if (event == "StreamsRunning") {
+      } else if (event == "StreamsRunning") {
         callState = CallState.streamsRunning;
-      }else if (event == "Paused") {
+      } else if (event == "Paused") {
         callState = CallState.paused;
-      }else if (event == "PausedByRemote") {
+      } else if (event == "PausedByRemote") {
         callState = CallState.pausedByRemote;
-      }else if (event == "Updating") {
+      } else if (event == "Updating") {
         callState = CallState.updating;
-      }else if (event == "UpdatedByRemote") {
+      } else if (event == "UpdatedByRemote") {
         callState = CallState.updatedByRemote;
-      }else if (event == "Released") {
+      } else if (event == "Released") {
         callState = CallState.released;
-      }else if (event == "EarlyUpdatedByRemote") {
+      } else if (event == "EarlyUpdatedByRemote") {
         callState = CallState.earlyUpdatedByRemote;
-      }else if (event == "Error") {
+      } else if (event == "Error") {
         callState = CallState.error;
       }
       return callState;
