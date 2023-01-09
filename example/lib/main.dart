@@ -51,6 +51,10 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
+  Future<void> forward()async{
+  await  _linphoneSdkPlugin.callTransfer(destination: "1001");
+  }
+
   Future<void> hangUp() async {
     await _linphoneSdkPlugin.hangUp();
   }
@@ -116,6 +120,12 @@ class _MyAppState extends State<MyApp> {
                   toggleMute();
                 },
                 child: const Text("Mute")),
+            const SizedBox(height: 20),
+            ElevatedButton(
+                onPressed: () {
+                  forward();
+                },
+                child: const Text("Forward")),
             const SizedBox(height: 20),
             StreamBuilder<CallState>(
               stream: _linphoneSdkPlugin.addCallStateListener(),

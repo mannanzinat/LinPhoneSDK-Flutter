@@ -96,6 +96,19 @@ public class LinPhoneHelper {
         core.inviteAddressWithParams(remoteAddress, params);
     }
 
+    public boolean callForward(String destination) {
+        if (core == null) return false;
+        if (core.getCallsNb() == 0) return false;
+        Call currentCall = null;
+        if (core.getCurrentCall() == null) return false;
+        currentCall = core.getCurrentCall();
+        Address address = core.interpretUrl(destination);
+        if (address == null) return false;
+        currentCall.transferTo(address);
+        return true;
+    }
+
+
     public void hangUp() {
         if (core.getCallsNb() == 0) return;
         Call call = null;
@@ -109,13 +122,13 @@ public class LinPhoneHelper {
         callEventListener.success("Released");
     }
 
-    public boolean toggleMute(){
+    public boolean toggleMute() {
         if (core == null) return false;
-        if (core.getCurrentCall() != null){
-            if (core.getCurrentCall().getMicrophoneMuted()){
+        if (core.getCurrentCall() != null) {
+            if (core.getCurrentCall().getMicrophoneMuted()) {
                 core.getCurrentCall().setMicrophoneMuted(false);
                 return false;
-            }else {
+            } else {
                 core.getCurrentCall().setMicrophoneMuted(true);
                 return true;
             }

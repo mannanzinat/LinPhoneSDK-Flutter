@@ -51,6 +51,11 @@ class LinphoneSDK {
     return _channel.invokeMethod("remove_call_listener");
   }
 
+  Future<bool> callTransfer({required String destination})async{
+    var data = {"destination": destination};
+    return await _channel.invokeMethod("transfer", data);
+  }
+
   Stream<LoginState> addLoginListener() {
     return _loginEventListener.receiveBroadcastStream().map((event) {
       LoginState loginState = LoginState.none;
