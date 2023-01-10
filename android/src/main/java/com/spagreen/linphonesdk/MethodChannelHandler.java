@@ -6,6 +6,8 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import org.linphone.core.CallLog;
+
 import java.util.Map;
 
 import io.flutter.embedding.android.FlutterActivity;
@@ -73,6 +75,10 @@ public class MethodChannelHandler extends FlutterActivity implements MethodChann
             case "toggle_speaker":
                 linPhoneHelper.toggleSpeaker();
                 result.success(true);
+                break;
+            case "call_logs":
+                String list = linPhoneHelper.callLogs();
+                result.success(list);
                 break;
             case "request_permissions":
                 try {

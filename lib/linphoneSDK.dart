@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:linphonesdk/CallLog.dart';
 import 'package:linphonesdk/call_state.dart';
 import 'package:linphonesdk/login_state.dart';
 
@@ -54,6 +56,11 @@ class LinphoneSDK {
   Future<bool> callTransfer({required String destination})async{
     var data = {"destination": destination};
     return await _channel.invokeMethod("transfer", data);
+  }
+
+  Future<CallLogs> callLogs()async{
+   var list =  await _channel.invokeMethod("call_logs");
+    return  CallLogs.fromJson(jsonDecode(list));
   }
 
   Stream<LoginState> addLoginListener() {

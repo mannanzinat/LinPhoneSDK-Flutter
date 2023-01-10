@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linphonesdk/CallLog.dart';
 import 'package:linphonesdk/call_state.dart';
 import 'dart:async';
 import 'package:linphonesdk/linphoneSDK.dart';
@@ -52,7 +53,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> forward()async{
-  await  _linphoneSdkPlugin.callTransfer(destination: "1001");
+  await  _linphoneSdkPlugin.callTransfer(destination: "1000");
   }
 
   Future<void> hangUp() async {
@@ -65,6 +66,11 @@ class _MyAppState extends State<MyApp> {
 
   Future<bool> toggleMute()async{
    return await _linphoneSdkPlugin.toggleMute();
+  }
+
+  Future<void> callLogs()async{
+    CallLogs callLogs = await _linphoneSdkPlugin.callLogs();
+    print("---------call logs length: ${callLogs.callHistory.length}");
   }
 
   @override
@@ -126,6 +132,12 @@ class _MyAppState extends State<MyApp> {
                   forward();
                 },
                 child: const Text("Forward")),
+            const SizedBox(height: 20),
+            ElevatedButton(
+                onPressed: () {
+                  callLogs();
+                },
+                child: const Text("Call Log")),
             const SizedBox(height: 20),
             StreamBuilder<CallState>(
               stream: _linphoneSdkPlugin.addCallStateListener(),

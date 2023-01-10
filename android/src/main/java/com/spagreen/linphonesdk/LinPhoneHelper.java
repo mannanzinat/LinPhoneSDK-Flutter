@@ -6,6 +6,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.Gson;
+
 import org.linphone.core.Account;
 import org.linphone.core.AccountListener;
 import org.linphone.core.AccountParams;
@@ -13,6 +15,7 @@ import org.linphone.core.Address;
 import org.linphone.core.AudioDevice;
 import org.linphone.core.AuthInfo;
 import org.linphone.core.Call;
+import org.linphone.core.CallLog;
 import org.linphone.core.CallParams;
 import org.linphone.core.Core;
 import org.linphone.core.CoreListener;
@@ -21,6 +24,10 @@ import org.linphone.core.Factory;
 import org.linphone.core.MediaEncryption;
 import org.linphone.core.RegistrationState;
 import org.linphone.core.TransportType;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import io.flutter.plugin.common.MethodChannel;
 
@@ -106,6 +113,25 @@ public class LinPhoneHelper {
         if (address == null) return false;
         currentCall.transferTo(address);
         return true;
+    }
+
+    public String callLogs() {
+        if (core == null) return null;
+        CallLog[] logs = core.getCallLogs();
+        List<CallHistory> callHistoryList = new ArrayList<>();
+        callHistoryList.clear();
+
+        for (CallLog log : logs) {
+            CallHistory history = new CallHistory();
+            history.setNumber(log.getToAddress().getUsername());
+            history.setStatus(log.getStatus().name());
+            history.setDate(log.getStartDate());
+            history.setDuration(log.getDuration());
+            callHistoryList.add(history);
+        }
+        ListCallHistory list = new ListCallHistory();
+        list.setCallHistoryList(callHistoryList);
+        return new Gson().toJson(list);
     }
 
 
