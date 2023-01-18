@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> login() async {
     await _linphoneSdkPlugin.login(
-        userName: "302", domain: "192.168.1.254:3939", password: "Hi@123");
+        userName: "", domain: "", password: "");
   }
 
   Future<void> call() async {
